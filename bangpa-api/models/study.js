@@ -4,7 +4,7 @@ module.exports = (sequelize, Sequelize) => (//미완성
       type: Sequelize.STRING(200),          // 글 제목
       allowNull: false,
     },
-    imgs: {
+    img : {
       type: Sequelize.JSON,          // 이미지 첨부
       allowNull: false,
     },
@@ -20,7 +20,22 @@ module.exports = (sequelize, Sequelize) => (//미완성
       type: Sequelize.INTEGER,              // team leader의 id
       allowNull: false,
     },
-    craetedAt: Sequelize.DATE,              // 모집 시작 시간
+    made: {                                 // 모집 완료 여부
+      type: Sequelize.BOOLEAN,
+      defaultValue: false,
+    },
+    minNumb: {                              // 최소 인원
+      type: Sequelize.INTEGER,
+      allowNull: false,
+    },
+    maxNumb: {                              // 최대 인원
+      type: Sequelize.INTEGER,
+      allowNull: false,
+    },
+    day: {                                  // 요일 설정
+      type: Sequelize.JSON,
+      allowNUll: false,
+    },
   }, {
     timestamps: true,
     paranoid: true,

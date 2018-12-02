@@ -53,6 +53,9 @@ db.Apply.belongsTo(db.Study);
 db.Study.belongsToMany(db.Category, { through: 'StudyCate' });   // 스터디모집과 카테고리
 db.Category.belongsToMany(db.Study, { through: 'StudyCate' });
 
+db.Study.belongsToMany(db.Area, { through: 'RankOneArea' });       // 스터디모집 우선지역
+db.Area.belongsToMany(db.Study, { through: 'RankOneArea' });
+
 db.Study.belongsToMany(db.Area, { through: 'StudyArea' });       // 스터디모집과 지역
 db.Area.belongsToMany(db.Study, { through: 'StudyArea' });
 

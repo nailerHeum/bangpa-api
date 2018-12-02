@@ -2,14 +2,12 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 
 const authRouter = require('./auth');
-const studiesRouter = require('./studies');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 const { Domain, User, Study, Hashtag, Room, Filteritem, Category, Area, Apply } = require('../models');
 
 const router = express.Router();
 
 router.use('/auth', authRouter);
-router.use('/studies', studiesRouter);
 // router.post('/token', async (req, res) => {
 //   const { clientSecret } = req.body;
 //   try {

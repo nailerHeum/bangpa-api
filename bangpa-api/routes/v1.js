@@ -9,8 +9,8 @@ const { Domain, User, Study, Hashtag, Room, Filteritem, Category, Area, Apply } 
 const router = express.Router();
 
 router.use(cors());
-
 router.use('/auth', authRouter);
+
 // router.post('/token', async (req, res) => {
 //   const { clientSecret } = req.body;
 //   try {

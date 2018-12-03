@@ -9,7 +9,6 @@ require('dotenv').config();
 
 const { sequelize } = require('./models');
 const passportConfig = require('./passport');
-const authRouter = require('./routes/auth');
 const pageRouter = require('./routes/page');
 const v1 = require('./routes/v1');  // api
 
@@ -39,7 +38,6 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/auth', authRouter);
 app.use('/page', pageRouter);
 app.use('/v1', v1); // api
 

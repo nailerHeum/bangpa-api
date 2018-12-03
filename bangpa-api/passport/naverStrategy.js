@@ -4,7 +4,7 @@ module.exports = (passport) => {
   passport.use(new NaverStrategy({
     clientID: process.env.NAVER_CLIENT_ID,
     clientSecret: process.env.NAVER_CLIENT_SECRET,
-    callbackURL: 'http://localhost:2018/auth/naver/callback',
+    callbackURL: 'http://localhost:8002/auth/naver/callback',
   },
   function(accessToken, refreshToken, profile, done) {
     User.findOne({

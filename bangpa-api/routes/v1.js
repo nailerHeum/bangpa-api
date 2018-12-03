@@ -4,7 +4,7 @@ const cors = require('cors');
 
 const authRouter = require('./auth');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
-const { Domain, User, Study, Hashtag, Room, Filteritem, Category, Area, Apply } = require('../models');
+const { User, Study, Hashtag, Category, Area } = require('../models');
 
 const router = express.Router();
 
@@ -52,9 +52,14 @@ router.get('/',  async (req, res) => {    // homepage // study와 거기에 해�
     const studies = await Study.findAll(
     {
       include: [{
-        model: Area,
+        model: Area, as: 'RankOneArea',
       }, {
-        model: User,
+        model: Area, through: 'StudyArea',
+      }, 
+      {
+        model: User, as: 'LeaderUser',
+      }, {
+        model: User, through: 'StudyUser',
       }, {
         model: Hashtag,
       }, {
@@ -76,6 +81,37 @@ router.get('/',  async (req, res) => {    // homepage // study와 거기에 해�
   }
 });
 // study 생성시 필요한 것들 : hashtags + areas + imgs + 
+
+router.get('/studies/:id', async(req, res) => {
+  try {
+    study = await Study.find({
+      where: { id: req.params.id},
+      include: [{
+        model: Area, as: 'RankOneArea',
+      }, {
+        model: Area, through: 'StudyArea',
+      }, 
+      {
+        model: User, as: 'LeaderUser',
+      }, {
+        model: User, through: 'StudyUser',
+      }, {
+        model: Hashtag,
+      },
+      ]
+    });
+    return res.status(200).json({
+      code: 200,
+      payload: { study },
+    })
+  } catch (error) {
+    console.error(error);
+    return res.status(404).json({
+      code: 404,
+      message: 'Study didn\'t exist.',
+    });
+  }
+})
 router.post('/studies', isLoggedIn, async (req, res) => {
   try {
     const study = await Study.create({
@@ -129,7 +165,7 @@ router.patch('/studies/:id', isLoggedIn, async (req, res) => {
       const categories = req.body.categories;
       if (hashtags) {
         const result = await Promise.all(hashtags.map(tag => Hashtag.findOrCreate({
-          where: { name: tag.slice(1).toUpperCase() },
+          where: { name: tag.slice(1).toLowerCase() },
         })));
         await post.updateHashtags(result.map(r => r[0]));
       }

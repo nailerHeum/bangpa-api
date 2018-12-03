@@ -38,8 +38,11 @@ db.Area.belongsToMany(db.User, { through: 'UserArea' });
 db.User.belongsToMany(db.Category, { through: 'UserCate' });     // 유저와 카테고리 
 db.Category.belongsToMany(db.User, { through: 'UserCate' });
 
-db.User.belongsToMany(db.Study, { through: 'StudyUser'});        // 유저와 스터디모집
-db.Study.belongsToMany(db.User, { through: 'StudyUser'});
+db.User.belongsToMany(db.Study, { through: 'StudyUser' });        // 유저와 스터디모집
+db.Study.belongsToMany(db.User, { through: 'StudyUser' });
+
+db.User.hasMany(db.Study);
+db.Study.belongsTo(db.User, { as: 'LeaderUser'});
 
 db.Hashtag.belongsToMany(db.Category, { through: 'HashCate' });  // 해시태그와 카테고리
 db.Category.belongsToMany(db.Hashtag, { through: 'HashCate' });
@@ -53,8 +56,8 @@ db.Apply.belongsTo(db.Study);
 db.Study.belongsToMany(db.Category, { through: 'StudyCate' });   // 스터디모집과 카테고리
 db.Category.belongsToMany(db.Study, { through: 'StudyCate' });
 
-db.Study.belongsToMany(db.Area, { through: 'RankOneArea' });       // 스터디모집 우선지역
-db.Area.belongsToMany(db.Study, { through: 'RankOneArea' });
+db.Study.belongsTo(db.Area, { as: 'RankOneArea' });       // 스터디모집 우선지역
+db.Area.hasMany(db.Study);
 
 db.Study.belongsToMany(db.Area, { through: 'StudyArea' });       // 스터디모집과 지역
 db.Area.belongsToMany(db.Study, { through: 'StudyArea' });

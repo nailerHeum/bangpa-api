@@ -3,11 +3,14 @@ const passport = require('passport');
 const bcrypt = require('bcrypt');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 const { User } = require('../models');
+const cors = require('cors');
+
 
 const router = express.Router();
-
+router.use(cors());
 router.post('/join', isNotLoggedIn, async (req, res, next) => {
-  const { email, nick, password } = req.body;
+  const { nick, email, password, snsId, job } = req.body;
+  console.log(req);
   try {
     const exUser = await User.find({ where: { email } });
     if (exUser) {
@@ -20,9 +23,11 @@ router.post('/join', isNotLoggedIn, async (req, res, next) => {
     }
     const hash = await bcrypt.hash(password, 12);
     await User.create({
-      email,
-      nick,
+      email: email,
+      nick: nick,
       password: hash,
+      job: job,
+      snsId: snsId,
     });
     res.status(301).json({ 
       code: 301,
@@ -31,7 +36,10 @@ router.post('/join', isNotLoggedIn, async (req, res, next) => {
     });
   } catch (error) {
     console.error(error);
-    return next(error);
+    res.status(401).json({
+      code: 401,
+      message: 'login 작업 실패',
+    });
   }
 });
 

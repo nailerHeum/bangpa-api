@@ -16,10 +16,6 @@ module.exports = (sequelize, Sequelize) => (//미완성
       type: Sequelize.DATE,                 // 모집 기간 종료일
       allowNull: false, 
     },
-    leader: {
-      type: Sequelize.INTEGER,              // team leader의 id
-      allowNull: false,
-    },
     made: {                                 // 모집 완료 여부
       type: Sequelize.BOOLEAN,
       defaultValue: false,

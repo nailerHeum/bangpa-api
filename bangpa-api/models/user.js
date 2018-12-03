@@ -22,7 +22,7 @@ module.exports = (sequelize, Sequelize) => (  //미완성
       type: Sequelize.STRING(30),     // snsId
       allowNull: true,
     },
-    class: {
+    job: {
       type: Sequelize.STRING(20),     // 대학생, 취준생, 직장인
       allowNull: false, 
     }

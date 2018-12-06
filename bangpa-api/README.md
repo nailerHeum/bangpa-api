@@ -4,6 +4,12 @@ mysql + Sequelize + nodejs + express
 
 
 
+## mysql 설정방법
+
+1. 
+
+
+
 /v1 을 통해서 요청, 응답 처리
 
 

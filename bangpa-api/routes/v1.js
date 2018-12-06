@@ -69,10 +69,10 @@ router.get('/',  async (req, res) => {    // homepage // study와 거기에 해�
     console.error(error);
     return res.status(404).json({
       code: 404,
-      message: '시발 왜 안돼',
+      message: '왜 안됨..',
     });
   }
-});
+});//hashtags areas imgs
 // study 생성시 필요한 것들 : hashtags + areas + imgs + 
 
 router.get('/studies/:id', async(req, res) => {

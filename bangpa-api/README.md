@@ -8,7 +8,7 @@ mysql + Sequelize + nodejs + express
 
 1. .env와 config.json 파일은 최성흠에게 있으니 달라고 요청한다.
 2. config.json의 database 설정을 본인의 mysql 권한에 맞게 고친다.
-3. .env는 bangpa-api에 넣고 config.json은 config폴더에 넣는다. 
+3. .env는 bangpa-api에 넣고 config.json은 config폴더를 만들고 안에 넣는다. 
 4. 아마 될 것이다.
 
 

@@ -38,19 +38,19 @@ payload
 
 Insertions for test
 
-INSERT INTO bangpa.studies (title, img, description, enddate, minNumb, maxNumb, day, createdAt, updatedAt) VALUES ('wtf', '{"img1":"fwegadsf", "key2":"wqcafwef"}', 'english mofucker', '2038-01-19 03:14:07', 3, 6, '[1, 3, 5]', '2038-01-19 03:14:07', '2038-01-19 03:14:07');
+INSERT INTO bangpa.studies (title, img, description, enddate, minNumb, maxNumb, day, createdAt, updatedAt) VALUES ('토익 스터디 급구합니다.', '{"img1":"noimgs6", "key2":"noimgs7"}', '토익을 해야 졸업을 합니다.', '2018-12-16 03:14:07', 3, 5, '[1, 5]', '2018-12-04 03:14:07', '2018-12-05 04:15:08');
 
 
 
-INSERT INTO bangpa.areas (name, createdAt, updatedAt) VALUES ('서울시 구', '2038-01-19 03:14:07', '2038-01-19 03:14:07');
+INSERT INTO bangpa.areas (name, createdAt, updatedAt) VALUES ('수원시 팔달구', '2018-01-19 03:14:07', '2018-01-19 03:14:07');
 
 
 
-INSERT INTO bangpa.hashtags (name, createdAt, updatedAt) VALUES ('취준생', '2038-01-19 03:14:07', '2038-01-19 03:14:07');
+INSERT INTO bangpa.hashtags (name, createdAt, updatedAt) VALUES ('고급', '2038-01-19 03:14:07', '2038-01-19 03:14:07');
 
 
 
-INSERT INTO bangpa.StudyHash (createdAt, updatedAt, hashtagId, studyId) VALUES ('2038-01-19 03:14:07', '2038-01-19 03:14:07', 9, 1);
+INSERT INTO bangpa.StudyHash (createdAt, updatedAt, hashtagId, studyId) VALUES ('2038-01-19 03:14:07', '2038-01-19 03:14:07', 9, 3);
 
 
 
@@ -58,7 +58,7 @@ INSERT INTO bangpa.users (email, nick, password, provider, snsId, job, createdAt
 
 
 
-update studies set LeaderUserId=1 where id=3
+update studies set RankOneAreaId=1 where id=2;
 
 
 
@@ -68,3 +68,8 @@ INSERT INTO bangpa.StudyArea (createdAt, updatedAt, studyId, areaId) VALUES ('20
 
 INSERT INTO bangpa.StudyUser (createdAt, updatedAt, userId, studyId) VALUES ('2038-01-19 03:14:07', '2038-01-19 03:14:07', 3, 3);
 
+
+
+- `-X POST`
+- -H "Content-Type: application/json"
+- -d '{"nick":"qwefqwef", "email":"kingman330@gmail.com", "password":"1234", "snsId":"kakaoef", "job":"대학생"}'

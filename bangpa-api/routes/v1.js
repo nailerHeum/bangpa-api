@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const cors = require('cors');
 
 const authRouter = require('./auth');
-const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
+const { isLoggedIn, isNotLoggedIn, verifyToken } = require('./middlewares');
 const { User, Study, Hashtag, Category, Area } = require('../models');
 
 const router = express.Router();
@@ -14,13 +14,6 @@ router.use('/auth', authRouter);
 // router.post('/token', async (req, res) => {
 //   const { clientSecret } = req.body;
 //   try {
-//     const domain = await Domain.find({ where: { clientSecret } });
-//     if (!domain) {
-//       return res.status(401).json({
-//         code: 401,
-//         message: 'Please Register Your Domain.',
-//       });
-//     }
 //     const token = jwt.sign(
 //       {}, process.env.JWT_SECRET, 
 //       {
@@ -112,7 +105,7 @@ router.get('/studies/:id', async(req, res) => {
     });
   }
 })
-router.post('/studies', isLoggedIn, async (req, res) => {
+router.post('/studies', verifyToken, async (req, res) => {
   try {
     const study = await Study.create({
       title: req.body.title,
@@ -191,7 +184,20 @@ router.patch('/studies/:id', isLoggedIn, async (req, res) => {
 });
 
 router.delete('/studies/:id', isLoggedIn, async (req, res) => {
-
+  try{
+    const study = await Study.find({ where: { id: req.params.id }});
+    study.destroy();
+    res.status(200).json({
+      code: 200,
+      message: 'Deletion success',
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(401).json({
+      code: 401,
+      message: 'Deletion failed',
+    });
+  }
 });
 
 // users
@@ -258,8 +264,8 @@ router.delete('/users/:id', isLoggedIn, async (req, res) => {
         message: 'User Destroyed',
       });
     } else {
-      res.status(500).json({
-        code: 500,
+      res.status(401).json({
+        code: 401,
         message: 'Not a proper user',
       });
     }
@@ -276,15 +282,31 @@ router.delete('/users/:id', isLoggedIn, async (req, res) => {
 //cafes
 
 router.get('/cafes', async (req, res) => {
+  try {
+    const cafe = await Cafe.create({
+      name: req.body.name,
+      description: req.body.description,
+      img: req.body.img, // multer or firebase
+    });
+    const filteritems = req.body.filteritems;
+    const area = req.body.area;
+    if(filteritems) {
+      const result = await Promise.all(filteritems.map)
+    }
+  } catch (error) {
+
+  }
+});
+router.get('/cafes/:id', async (req, res) => {
 
 });
 router.post('/cafes', async (req, res) => {
 
 });
-router.patch('/cafes', async (req, res) => {
+router.patch('/cafes:id', async (req, res) => {
 
 });
-router.delete('/cafes', async (req, res) => {
+router.delete('/cafes:id', async (req, res) => {
 
 });
 

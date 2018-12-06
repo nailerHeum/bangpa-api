@@ -9,13 +9,12 @@ require('dotenv').config();
 
 const { sequelize } = require('./models');
 const passportConfig = require('./passport');
-const pageRouter = require('./routes/page');
 const v1 = require('./routes/v1');  // api
 
 const app = express();
 sequelize.sync();
 passportConfig(passport);
-
+require('./passport');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 app.set('port', process.env.PORT || 8002);
@@ -38,7 +37,6 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/page', pageRouter);
 app.use('/v1', v1); // api
 
 app.use((req, res, next) => {

@@ -8,6 +8,7 @@ module.exports = (sequelize, Sequelize) => (  //미완성
     nick: {
       type: Sequelize.STRING(40),     //닉네임
       allowNull: false,
+      unique: true,
     },
     password: {
       type: Sequelize.STRING(100),    //비밀번호 encrypted
@@ -21,6 +22,7 @@ module.exports = (sequelize, Sequelize) => (  //미완성
     snsId: {
       type: Sequelize.STRING(30),     // snsId
       allowNull: true,
+      unique: true,
     },
     job: {
       type: Sequelize.STRING(20),     // 대학생, 취준생, 직장인

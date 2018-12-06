@@ -1,6 +1,10 @@
 const express = require('express');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const passportJWT = require("passport-jwt");
+const JWTStrategy   = passportJWT.Strategy;
+const ExtractJWT = passportJWT.ExtractJwt;
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 const { User } = require('../models');
 const cors = require('cors');
@@ -29,9 +33,8 @@ router.post('/join', isNotLoggedIn, async (req, res, next) => {
       job: job,
       snsId: snsId,
     });
-    res.status(301).json({ 
-      code: 301,
-      Location: '/',
+    res.status(201).json({ 
+      code: 201,
       message: 'user created'
     });
   } catch (error) {
@@ -44,7 +47,7 @@ router.post('/join', isNotLoggedIn, async (req, res, next) => {
 });
 
 router.post('/login', isNotLoggedIn, (req, res, next) => {
-  passport.authenticate('local', (authError, user, info) => {
+  passport.authenticate('local', { session: false }, (authError, user, info) => {
     if (authError) {
       console.error(authError);
       return next(authError);
@@ -55,23 +58,25 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
         message: 'login failed',
       })
     }
-    return req.login(user, (loginError) => {
+    return req.login(user, { session: false }, (loginError) => {
       if (loginError) {
         console.error(loginError);
         return next(loginError);
       }
-      res.status(301).json({ 
-        code: 301,
-        Location: '/',
-        message: 'session created'
-      });
+      const token = jwt.sign({ user }, process.env.JWT_SECRET, {expiresIn: '1d'});
+      res.status(200).json({ user, token });
     });
   })(req, res, next);
 });
-router.get('/logout', isLoggedIn, (req, res) => {
+router.get('/logout', passport.authenticate('jwt', {session: false}), (req, res) => {
   req.logout();
   req.session.destroy();
-  // redirect
+  
+  res.status(200).json({
+    code: 200,
+    Location: '/',
+    message: 'logout success',
+  });
 });
 
 router.get('/kakao', passport.authenticate('kakao'));

@@ -2,3 +2,4 @@ bangpa-api/node_modules
 bangpa-api/*.log
 bangpa-api/.env
 bangpa-api/config
+.DS_store
